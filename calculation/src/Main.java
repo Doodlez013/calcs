@@ -1,63 +1,48 @@
-import java.util.Scanner;
-
+import java.util. Scanner;
 public class Main {
-        public static void main(String[] args){
-            Scanner scanner = new Scanner(System.in);
-            while (true){
-                System.out.println("Выберите операцию");
-                System.out.println("1.Сложение");
-                System.out.println("2.Вычитание");
-                System.out.println("3.Умножение");
-                System.out.println("4.Деление");
-                System.out.println("5.Выход");
-                int person = scanner.nextInt();
-                int result;
-                if (person ==5) {
-                    break;
-                }else if (person == 1){
-                    System.out.println("Введите первое число :");
-                    int a = scanner.nextInt();
-                    System.out.println("Введите второе число :");
-                    int b = scanner.nextInt();
-                    System.out.println("a : " +a);
-                    System.out.println("b : " +b);
-                    result = a + b;
-                    System.out.println("Ответ : " + result);
-                }else if (person == 2){
-                    System.out.println("Введите первое число :");
-                    int a = scanner.nextInt();
-                    System.out.println("Введите второе число :");
-                    int b = scanner.nextInt();
-                    System.out.println("a : " +a);
-                    System.out.println("b : " +b);
-                    result = a - b;
-                    System.out.println("Ответ : " + result);
-                }else if (person == 3){
-                    System.out.println("Введите первое число :");
-                    int a = scanner.nextInt();
-                    System.out.println("Введите второе число :");
-                    int b = scanner.nextInt();
-                    System.out.println("a : " +a);
-                    System.out.println("b : " +b);
-                    result = a * b;
-                    System.out.println("Ответ : " + result);
-                }else if (person == 4) {
-                    System.out.println("Введите первое число :");
-                    int a = scanner.nextInt();
-                    System.out.println("Введите второе число :");
-                    int b = scanner.nextInt();
-                    if (b == 0) {
-                        System.out.println("На ноль делить нельзя");
-                    }
-                    System.out.println("a : " + a);
-                    System.out.println("b : " + b);
-                    result = a / b;
-                    System.out.println("Ответ : " + result);
-                }else {
-                        System.out.println("Error");
-                }
+    public static void main(String[] args) {
+        String[] actions = {"+",  "-", "/", "*"};
+        String[] regexActions = {"\\+", "-", "/", "\\*"};
+        Scanner scn = new Scanner (System.in);
+        System.out.print("insert equation: ");
+        String exp = scn.nextLine();
 
+        int actionIndex=-1;
+        for (int i = 0; i < actions.length; i++) {
+            if (exp.contains (actions [i])) {
+                actionIndex = i;
+                break;
             }
-            System.out.println("Программа завершена");
+        }
+
+        if (actionIndex==-1){
+            System.out.println("Incorrect equation");
+            return;
+        }
+
+        String[] data = exp.split(regexActions [actionIndex]);
+        int a,b;
+        a = Integer.parseInt(data[0]);
+        b = Integer.parseInt(data[1]);
+        int result;
+        switch (actions [actionIndex]) {
+            case "+":
+                result = a+b;
+                break;
+            case "-":
+                result = a-b;
+                break;
+            case "*":
+                result = a*b;
+                break;
+            default:
+                if (b == 0) {
+                    System.out.println("Division by zero is not allowed");
+                    return;
+                }
+                result = a / b;
+                break;
+        }
+        System.out.println(result);
     }
 }
